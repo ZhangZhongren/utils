@@ -6,7 +6,7 @@ bin-release/
 .history
 # Other files and folders
 .settings/
-
+node_modules
 # Executables
 *.swf
 *.air

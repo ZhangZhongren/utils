@@ -31,9 +31,31 @@ export const isUndefined = (val: any): boolean => val === undefined;
 export const isNull = (val: any):boolean => val === null;
 
 /**
- * 判断 微定义或者空
+ * 判断 未定义或者空
  * @param val any
  * @returns 
  */
 
 export const isNil = (val: any): boolean => val === undefined || val === null;
+
+/**
+ * type symbol
+ * @param val 
+ * @returns 
+ */
+export const isSymbol = (val: any) => typeof val === 'symbol';
+
+/**
+ * val is number
+ * @param val any
+ * @returns 
+ */
+export const isNumber = (val: any): boolean => typeof val === 'number' && val === val;
+
+/**
+ * val is boolean
+ * @param val any
+ * @returns 
+ */
+
+export const isBoolean = (val: any): boolean => typeof val === 'boolean';

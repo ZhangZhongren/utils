@@ -33,3 +33,26 @@ export const copyToClipboard = (str: string) => {
    document.getSelection().addRange(selected);
  }
 }
+
+/**
+ * 浏览器是否聚焦
+ * @returns boolean
+ */
+
+export const isBrowserTabFocused = (): boolean => !document.hidden;
+
+/**
+ * 指定元素是否聚焦
+ * @param el HTMLElement
+ * @returns boolean
+ */
+export const elementIsFocused = (el: HTMLElement): boolean => (el === document.activeElement);
+
+/**
+ * 检查页面底部是否可见
+ */
+
+export const bottomVisible = (): boolean =>
+  document.documentElement.clientHeight + window.scrollY >=
+  (document.documentElement.scrollHeight ||
+    document.documentElement.clientHeight);
