@@ -59,3 +59,53 @@ export const isNumber = (val: any): boolean => typeof val === 'number' && val ==
  */
 
 export const isBoolean = (val: any): boolean => typeof val === 'boolean';
+
+/**
+ * 测量函数执行时间
+ * @param callback 
+ * @returns 
+ */
+export const timeTaken = (callback: Function) => {
+  console.time('timeTaken');
+  const r = callback();
+  console.timeEnd('timeTaken');
+  return r;
+};
+
+/**
+ * 浅克隆
+ * @param obj 
+ * @returns 
+ */
+
+export const shallowClone = (obj: Object) => Object.assign({}, obj);
+
+/**
+ * 随机布尔值
+ * @returns boolean
+ */
+
+export const randomBoolean = (): boolean => Math.random() >= 0.5;
+
+/**
+ * 否定谓词函数
+ * @param func 
+ * @returns
+ */
+export const negate = (func: Function) => (...args) => !func(...args);
+
+/**
+ * 检查是否大些
+ * @param str 
+ * @returns 
+ */
+
+export const isUpperCase = (str: string): boolean => str === str.toUpperCase();
+
+/**
+ * 检查是否小写
+ * @param str 
+ * @returns 
+ */
+
+export const isLowerCase = (str: string): boolean => str === str.toLowerCase();
