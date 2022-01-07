@@ -16,3 +16,11 @@ export const requireUncached = (module: string): NodeModule => {
   return require(module);
 };
 
+/**
+ * base64解码
+ * @param str 
+ * @returns string
+ */
+
+export const atob = (str: string): string => Buffer.from(str, 'base64').toString('binary');
+

@@ -61,6 +61,13 @@ export const isNumber = (val: any): boolean => typeof val === 'number' && val ==
 export const isBoolean = (val: any): boolean => typeof val === 'boolean';
 
 /**
+ * val is string
+ * @param val any
+ * @returns boolean
+ */
+export const isString = (val: any): boolean => typeof val === 'string';
+
+/**
  * 测量函数执行时间
  * @param callback 
  * @returns 
@@ -109,3 +116,79 @@ export const isUpperCase = (str: string): boolean => str === str.toUpperCase();
  */
 
 export const isLowerCase = (str: string): boolean => str === str.toLowerCase();
+
+/**
+ * 是否支持 session
+ * @returns boolean
+ */
+export const isSessionStorageEnabled = (): boolean => {
+  try {
+    const key = `__storage__test`;
+    window.sessionStorage.setItem(key, null);
+    window.sessionStorage.removeItem(key);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
+/**
+ * 是否支持 localstorage
+ * @returns 
+ */
+export const isLocalStorageEnabled = (): boolean => {
+  try {
+    const key = `__storage__test`;
+    window.localStorage.setItem(key, null);
+    window.localStorage.removeItem(key);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
+/**
+ * check like object
+ * @param val 
+ * @returns boolean
+ */
+export const isObjectLike = (val: any):boolean => val !== null && typeof val === 'object';
+
+
+/**
+ * 将给定的数字填充到指定的长度。
+ * @param n 
+ * @param l 
+ * @returns 
+ */
+ export const padNumber = (n: number | string, l: number) => `${n}`.padStart(l, '0');
+
+ /**
+  * 检查是否是 function
+  * @param val 
+  * @returns 
+  */
+ export const isFunction = (val: any) => typeof val === 'function';
+
+ /**
+  * 数组中是否含有后面的数组选项
+  * @param arr 
+  * @param values 
+  * @returns 
+  */
+ export const includesAny = (arr: Array<string|number>, values: Array<string|number>) => values.some(v => arr.includes(v));
+
+ /**
+  * values中元素 是否所有被 arr包含
+  * @param arr 
+  * @param values 
+  * @returns 
+  */
+ export const includesAll = (arr: Array<string|number>, values: Array<string|number>) => values.every(v => arr.includes(v));
+
+ /**
+  * clone regExp
+  * @param regExp 
+  * @returns 
+  */
+ export const cloneRegExp = (regExp: RegExp): RegExp => new RegExp(regExp.source, regExp.flags);
