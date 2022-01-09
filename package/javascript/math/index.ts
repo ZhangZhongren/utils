@@ -74,3 +74,11 @@ export const isPowerOfTwo = (n: number): boolean => !!n && (n & (n - 1)) == 0;
  * @returns 
  */
 export const distance = (x0: number, y0: number, x1: number, y1: number):number => Math.hypot(x1 - x0, y1 - y0);
+
+/**
+ * 保留指定小数四舍五入
+ * @param n 
+ * @param decimals 
+ * @returns 
+ */
+export const round = (n, decimals = 0) => Number(`${Math.round(`${n}e${decimals}` as unknown as number)}e-${decimals}`);

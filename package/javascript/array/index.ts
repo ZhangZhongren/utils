@@ -12,3 +12,10 @@ export const head = arr => (arr && arr.length ? arr[0] : undefined);
  * @returns 
  */
 export const union = (...arg: Array<Array<any>>) => Array.from(new Set([...arg.reduce((total, current) => total = [...total, ...current] , [])]));
+
+/**
+ * any to array
+ * @param val 
+ * @returns 
+ */
+export const castArray = (val: any): Array<any> => (Array.isArray(val) ? val : [val]);

@@ -1,3 +1,4 @@
+
 /**
  * 
  * @param url location.href
@@ -133,3 +134,19 @@ export const elementIsVisibleInViewport = (el: HTMLElement, partiallyVisible = f
  * @returns 
  */
 export const elementContains = (parent: HTMLElement, child: HTMLElement): Boolean => parent !== child && parent.contains(child);
+
+/**
+ * 获取当前选中的文字
+ * @returns 
+ */
+export const getSelectedText = () => window.getSelection().toString();
+
+/**
+ * 获取滚动位置
+ * @param el 
+ * @returns 
+ */
+export const getScrollPosition = (el = window as any) => ({
+  x: el.pageXOffset !== undefined ? el.pageXOffset : el.scrollLeft,
+  y: el.pageYOffset !== undefined ? el.pageYOffset : el.scrollTop
+});

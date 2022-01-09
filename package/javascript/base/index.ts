@@ -192,3 +192,35 @@ export const isObjectLike = (val: any):boolean => val !== null && typeof val ===
   * @returns 
   */
  export const cloneRegExp = (regExp: RegExp): RegExp => new RegExp(regExp.source, regExp.flags);
+
+/**
+ * 检查参数是否为number
+ * @param n 
+ * @returns 
+ */
+ export const validateNumber = (n: any): boolean => {
+  const num = parseFloat(n);
+  return !Number.isNaN(num) && Number.isFinite(num) && Number(n) == n;
+}
+
+/**
+ * 将数字转换为小数点格式的字符串。
+ * @param num 
+ * @returns 
+ */
+
+export const toDecimalMark = (num: number): string => num.toLocaleString('en-US');
+
+/**
+ * 检查参数是否为基本数据类型
+ * @param val 
+ * @returns 
+ */
+export const isPrimitive = (val: any): boolean => Object(val) !== val;
+
+/**
+ * 返回值的基本类型
+ * @param v 
+ * @returns 
+ */
+export const getType = (v: any) => (v === undefined ? 'undefined' : v === null ? 'null' : v.constructor.name);
