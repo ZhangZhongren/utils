@@ -150,3 +150,13 @@ export const getScrollPosition = (el = window as any) => ({
   x: el.pageXOffset !== undefined ? el.pageXOffset : el.scrollLeft,
   y: el.pageYOffset !== undefined ? el.pageYOffset : el.scrollTop
 });
+
+/**
+ * 设置元素 style
+ * @param el 
+ * @param rule 
+ * @param val 
+ * @returns 
+ */
+export const setStyle = (el: HTMLElement, rule: string, val: string | number) => (el.style[rule] = val);
+
