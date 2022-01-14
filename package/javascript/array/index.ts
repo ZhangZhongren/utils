@@ -35,3 +35,34 @@ export const take = (arr: Array<any>, n = 1): Array<any> => arr.slice(0, n);
  * @returns 
  */
 export const tail = (arr: Array<any>) => (arr.length > 1 ? arr.slice(1) : arr);
+
+/**
+ * 返回数组中除最后一个元素之外的所有元素。
+ * @param arr 
+ * @returns 
+ */
+export const initial = (arr: Array<any>) => arr.slice(0, -1);
+
+
+/**
+ * 用指定的值来初始化指定长度的数组
+ * @param n 
+ * @param val 
+ * @returns 
+ */
+export const initializeArrayWithValues = (n: number, val = 0) => Array.from({ length: n }).fill(val)
+
+
+/**
+ * 检查数组是否已经排序 1 正序 -1 倒叙 0 未排序
+ * @param arr 
+ * @returns 
+ */
+export const isSorted = (arr: Array<number>) => {
+  if (arr.length <= 1) return 0;
+  const direction = arr[1] - arr[0];
+  for (let i = 2; i < arr.length; i++) {
+    if ((arr[i] - arr[i - 1]) * direction < 0) return 0;
+  }
+  return Math.sign(direction);
+};

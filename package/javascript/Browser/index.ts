@@ -160,3 +160,80 @@ export const getScrollPosition = (el = window as any) => ({
  */
 export const setStyle = (el: HTMLElement, rule: string, val: string | number) => (el.style[rule] = val);
 
+/**
+ * 给定元素到文档顶部的距离。
+ * @param el 
+ * @returns 
+ */
+export const getVerticalOffset = (el: HTMLElement) => {
+  let offset = el.offsetTop,
+    _el: any = el;
+  while (_el.offsetParent) {
+    _el = _el.offsetParent;
+    offset += _el.offsetTop;
+  }
+  return offset;
+};
+
+/**
+ * 检测设备是在自动断还是pc端
+ * @returns 
+ */
+export const detectDeviceType = (): string => /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test( navigator.userAgent ) ? 'Mobile': 'Desktop';
+
+/**
+ * 切换 class
+ * @param el 
+ * @param className 
+ * @returns 
+ */
+export const toggleClass = (el: HTMLElement, className: string) => el.classList.toggle(className);
+
+/**
+ * 元素清除指定class
+ * @param el 
+ * @param className 
+ * @returns 
+ */
+export const removeClass = (el: HTMLElement, className: string) => el.classList.remove(className);
+
+/**
+ * 增加类名
+ * @param el 
+ * @param className 
+ * @returns 
+ */
+export const addClass = (el: HTMLElement, className: string) => el.classList.add(className);
+
+
+/**
+ * 获取元素的某个样式
+ * @param el 
+ * @param ruleName 
+ * @returns 
+ */
+export const getStyle = (el: HTMLElement, ruleName: string) => getComputedStyle(el)[ruleName];
+
+/**
+ * 过滤掉 str 中的 html/xml标签
+ * @param str 
+ * @returns 
+ */
+export const stripHTMLTags = (str: string) => str.replace(/<[^>]*>/g, '');
+
+/**
+ * 手动触发dom事件
+ * @param el 
+ * @param eventType 
+ * @param detail 
+ * @returns 
+ */
+export const triggerEvent = (el: HTMLElement, eventType: string, detail: Object) => el.dispatchEvent(new CustomEvent(eventType, { detail }));
+
+/**
+ * 平滑的滚动到指定的元素
+ * @param element 
+ * @returns 
+ */
+// https://developer.mozilla.org/zh-CN/docs/Web/API/Element/scrollIntoView
+const smoothScroll = (element: string) => document.querySelector(element).scrollIntoView({ behavior: 'smooth' });

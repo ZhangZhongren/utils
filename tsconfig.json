@@ -1,5 +1,13 @@
 {
   "compilerOptions": {
-    "lib": ["esNext", "DOM"]
-  }
+    "lib": [
+      "esNext",
+      "DOM",
+      "es5",
+      "es6",
+      "es7",
+      "dom.iterable"
+    ]
+  },
+  "downlevelIteration": true
 }

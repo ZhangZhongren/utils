@@ -82,3 +82,26 @@ export const distance = (x0: number, y0: number, x1: number, y1: number):number 
  * @returns 
  */
 export const round = (n, decimals = 0) => Number(`${Math.round(`${n}e${decimals}` as unknown as number)}e-${decimals}`);
+
+/**
+ * 求两点的中间点
+ * @param param0 
+ * @param param1 
+ * @returns 
+ */
+export const midpoint = ([x1, y1], [x2, y2]) => [(x1 + x2) / 2, (y1 + y2) / 2];
+
+/**
+ * 
+ * @param n 计算一个数的阶乘
+ * @returns 
+ */
+export const factorial = (n: number) => n < 0 ? (() => { throw new TypeError('Negative numbers are not allowed!'); })() : n <= 1 ? 1 : n * factorial(n - 1);
+
+/**
+ * 在范围内生成随机数
+ * @param min 
+ * @param max 
+ * @returns 
+ */
+export const randomNumberInRange = (min: number, max: number) => Math.random() * (max - min) + min;

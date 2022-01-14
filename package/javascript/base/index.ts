@@ -224,3 +224,100 @@ export const isPrimitive = (val: any): boolean => Object(val) !== val;
  * @returns 
  */
 export const getType = (v: any) => (v === undefined ? 'undefined' : v === null ? 'null' : v.constructor.name);
+
+/**
+ * 检查 value 是否为指定类型
+ * @param type 
+ * @param val 
+ * @returns 
+ */
+export const is = <T>(type: T, val: any) => ![, null].includes(val) && val.constructor === type;
+
+/**
+ * 检查参数重是否含有空格
+ * @param str 
+ * @returns 
+ */
+
+export const containsWhitespace = (str: string): boolean => /\s/.test(str);
+
+/**
+ * 接受一个数字并以指定的货币格式返回它。
+ * @param n 
+ * @param curr 
+ * @param LanguageFormat 
+ * @returns 
+ */
+export const toCurrency = (n: number, curr: string, LanguageFormat: any = undefined) =>
+Intl.NumberFormat(LanguageFormat, {
+  style: 'currency',
+  currency: curr,
+}).format(n);
+
+/**
+ * 是否为json格式的字符串
+ * @param str 
+ * @returns 
+ */
+export const isJSON = (str: string):boolean => { try { JSON.parse(str); return true } catch (e) { return false; }};
+
+/**
+ * 检测字符串是否只包含字符串
+ * @param str 
+ * @returns 
+ */
+export const isAlpha = (str: string): boolean => /^[a-zA-Z]*$/.test(str);
+
+/**
+ * 驼峰转为字符串
+ * @param str 
+ * @param separator 
+ * @returns 
+ */
+export const fromCamelCase = (str: string, separator = '_') =>
+str
+  .replace(/([a-z\d])([A-Z])/g, '$1' + separator + '$2')
+  .replace(/([A-Z]+)([A-Z][a-z\d]+)/g, '$1' + separator + '$2')
+  .toLowerCase();
+
+/**
+ * 返回字符串的长度以字节为单位
+ * @param str 
+ * @returns 
+ */
+export const byteSize = (str: string) => new Blob([str]).size;
+
+/**
+ * 过滤空格
+ * @param str 
+ * @returns 
+ */
+export const removeWhitespace = (str: string) => str.replace(/\s+/g, '');
+
+/**
+ * 用特定字符隐藏字符
+ * @param cc 
+ * @param num 
+ * @param mask 
+ * @returns 
+ */
+export const mask = (cc: string, num = 4, mask = '*') => `${cc}`.slice(-num).padStart(`${cc}`.length, mask);
+
+/**
+ * 检查当前用户的首选语言
+ * @param defaultLang 
+ * @returns 
+ */
+export const detectLanguage = (defaultLang = 'en-US') => 
+navigator.language ||
+(Array.isArray(navigator.languages) && navigator.languages[0]) ||
+defaultLang;
+
+/**
+ * 合并空格
+ * @param str 
+ * @returns 
+ */
+export const compactWhitespace = (str: string) => str.replace(/\s{2,}/g, ' ');
+
+export const toCharArray = (s: string) => [...s];
