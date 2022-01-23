@@ -1,29 +1,31 @@
-/**
- * 
- * @param ms waiting times(seconds)
- */
-export const sleep = (ms = 30) => {
-  const end = new Date().getTime() + ms;
-  while (new Date().getTime() < end) { /* do nothing */ }
+import * as browser from './Browser/index'
+import * as base from './base/index'
+import * as string from './string/index'
+import * as math from './math/index'
+import * as color from './color/index'
+import * as date from './date/index'
+import * as node from './node/index'
+import * as object from './object/index'
+import * as array from './array/index'
+
+export default {
+  ...browser,
+  ...base,
+  ...string,
+  ...math,
+  ...color,
+  ...date,
+  ...node,
+  ...object,
+  ...array
 }
 
-/**
- * 
- * @param ms waiting times(seconds)
- */
-export const sleepAsync = (ms = 30) => {
-  new Promise(resolve => setTimeout(resolve, ms));
-}
-
-/**
- * 
- * @param args functions 从右到左执行
- * @returns 函数依次运行结果
- */
-export const compose = (...args:  Array<Function>) => <T>(x: T) => args.reduceRight(<U>(res: U, cb: Function) => cb(res), x);
-/**
- * 
- * @param args functions 从左到右执行
- * @returns 函数依次运行结果
- */
-export const pipe = (...args: Array<Function>) => <T>(x: T) => args.reduce(<U>(res: U, cb: Function) => cb(res), x)
+export * as browser from './Browser/index'
+export * as base from './base/index'
+export * as string from './string/index'
+export * as math from './math/index'
+export * as color from './color/index'
+export * as date from './date/index'
+export * as node from './node/index'
+export * as object from './object/index'
+export * as array from './array/index'
