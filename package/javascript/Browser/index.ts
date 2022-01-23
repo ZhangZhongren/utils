@@ -425,3 +425,82 @@ export const observeMutations = (element, callback, options) => {
   );
   return observer;
 };
+
+
+/**
+ * 获取 form 的值
+ * @param form 
+ * @returns 
+ */
+export const formToObject = (form: HTMLFormElement) =>
+Array.from(new FormData(form)).reduce(
+  (acc, [key, value]) => ({
+    ...acc,
+    [key]: value
+  }),
+  {}
+);
+
+/**
+ * 浏览器生成 uuid
+ * @returns 
+ */
+export const UUIDGeneratorBrowser = () =>
+('10000000-1000-4000-8000-100000000000').replace(/[018]/g, (c: any) =>
+  (
+    c ^
+    (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+  ).toString(16)
+);
+
+/**
+ * 获取imgae 的 srv
+ * @param el 
+ * @param includeDuplicates 是否去重
+ * @returns 
+ */
+export const getImages = (el: HTMLElement, includeDuplicates = false) => {
+  const images = [...el.getElementsByTagName('img')].map(img =>
+    img.getAttribute('src')
+  );
+  return includeDuplicates ? images : [...new Set(images)];
+};
+
+/**
+ * 获取 baseurl
+ * @param url 
+ * @returns 
+ */
+export const getBaseURL = (url: string) => url.replace(/[?#].*$/, '');
+
+/**
+ * post 请求
+ * @param url 
+ * @param data json 字符串
+ * @param callback 
+ * @param err 
+ */
+export const httpPost = (url: string, data: string, callback: Function, err = console.error) => {
+  const request = new XMLHttpRequest();
+  request.open('POST', url, true);
+  request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+  request.onload = () => callback(request.responseText);
+  request.onerror = () => err(request);
+  request.send(data);
+};
+
+/**
+ * http put 请求
+ * @param url 
+ * @param data json 字符串
+ * @param callback 
+ * @param err 
+ */
+export const httpPut = (url: string, data: string, callback: Function, err = console.error) => {
+  const request = new XMLHttpRequest();
+  request.open('PUT', url, true);
+  request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+  request.onload = () => callback(request);
+  request.onerror = () => err(request);
+  request.send(data);
+};
