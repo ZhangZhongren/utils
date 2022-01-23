@@ -11,6 +11,21 @@
    ),
    {}
  )
+
+/**
+ * 格式化 cookie
+ * @param str 
+ * @returns 
+ */
+export const parseCookie = (str: string): any =>
+str
+  .split(';')
+  .map(v => v.split('='))
+  .reduce((acc, v) => {
+    acc[decodeURIComponent(v[0].trim())] = decodeURIComponent(v[1].trim());
+    return acc;
+  }, {});
+
 /**
 * 
 * @param str copy
@@ -226,7 +241,7 @@ export const stripHTMLTags = (str: string) => str.replace(/<[^>]*>/g, '');
  * @param el 
  * @param eventType 
  * @param detail 
- * @returns 
+ * @returns
  */
 export const triggerEvent = (el: HTMLElement, eventType: string, detail: Object) => el.dispatchEvent(new CustomEvent(eventType, { detail }));
 
@@ -237,3 +252,176 @@ export const triggerEvent = (el: HTMLElement, eventType: string, detail: Object)
  */
 // https://developer.mozilla.org/zh-CN/docs/Web/API/Element/scrollIntoView
 const smoothScroll = (element: string) => document.querySelector(element).scrollIntoView({ behavior: 'smooth' });
+
+/**
+ * 回到顶部
+ */
+export const scrollToTop = () => {
+  const c = document.documentElement.scrollTop || document.body.scrollTop;
+  if (c > 0) {
+    window.requestAnimationFrame(scrollToTop);
+    window.scrollTo(0, c - c / 8);
+  }
+};
+
+/**
+ * 使用 SHA-256 创建 hash
+ * @param val 
+ * @returns 
+ * @TextEncoder https://developer.mozilla.org/zh-CN/docs/Web/API/TextEncoder 
+ */
+export const hashBrowser = (val: string) =>
+  crypto.subtle
+    .digest('SHA-256', new TextEncoder().encode(val))
+    .then(h => {
+      let hexes = [],
+        view = new DataView(h);
+      for (let i = 0; i < view.byteLength; i += 4)
+        hexes.push(('00000000' + view.getUint32(i).toString(16)).slice(-8));
+      return hexes.join('');
+    });
+
+/**
+ * hsl 颜色字符串转换为 颜色值
+ * @param hslStr 
+ * @returns 
+ */
+export const toHSLObject = (hslStr: string) => {
+  const [hue, saturation, lightness] = hslStr.match(/\d+/g).map(Number);
+  return { hue, saturation, lightness };
+};
+
+/**
+ * rgb 字符串转化为 rgb 对象
+ * @param rgbStr 
+ * @returns 
+ */
+export const toRGBObject = (rgbStr: string): { red: number, green: number, blue: number } => {
+  const [red, green, blue] = rgbStr.match(/\d+/g).map(Number);
+  return { red, green, blue };
+};
+
+
+/**
+ * 修改 hls 字符串的高亮值
+ * @param delta 
+ * @param hslStr 
+ * @returns 
+ */
+export const changeLightness = (delta: string, hslStr: string) => {
+  const [hue, saturation, lightness] = hslStr.match(/\d+/g).map(Number);
+
+  const newLightness = Math.max(
+    0,
+    Math.min(100, lightness + parseFloat(delta))
+  );
+
+  return `hsl(${hue}, ${saturation}%, ${newLightness}%)`;
+};
+/**
+ * 通过使用 Web Worker 在单独的线程中运行函数，允许长时间运行的函数不会阻塞 UI。
+ * @param fn 
+ * @returns 
+ */
+export const runAsync = (fn: Function) => {
+  const worker = new Worker(
+    URL.createObjectURL(new Blob([`postMessage((${fn})());`]))
+  );
+  return new Promise((res, rej) => {
+    worker.onmessage = ({ data }) => {
+      res(data), worker.terminate();
+    };
+    worker.onerror = err => {
+      rej(err), worker.terminate();
+    };
+  });
+};
+
+/**
+ * 创建一个发布订阅者模式
+ * @returns 
+ */
+export const createEventHub = () => ({
+  hub: Object.create(null),
+  emit(event, data) {
+    (this.hub[event] || []).forEach(handler => handler(data));
+  },
+  on(event, handler) {
+    if (!this.hub[event]) this.hub[event] = [];
+    this.hub[event].push(handler);
+  },
+  off(event, handler) {
+    const i = (this.hub[event] || []).findIndex(h => h === handler);
+    if (i > -1) this.hub[event].splice(i, 1);
+    if (this.hub[event].length === 0) delete this.hub[event];
+  }
+});
+
+/**
+ * 获取所有同级元素
+ * @param el 
+ * @returns 
+ */
+export const getSiblings = (el: HTMLElement) => [...el.parentNode.childNodes].filter(node => node !== el);
+
+/**
+ * 转译html标签
+ * @param str 
+ * @returns 
+ */
+export const escapeHTML = (str: string): string =>
+str.replace(
+  /[&<>'"]/g,
+  tag =>
+    ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      "'": '&#39;',
+      '"': '&quot;'
+    }[tag] || tag)
+);
+/**
+ * 反转译
+ * @param str 
+ * @returns 
+ */
+export const unescapeHTML = (str: string): string =>
+str.replace(
+  /&amp;|&lt;|&gt;|&#39;|&quot;/g,
+  tag =>
+    ({
+      '&amp;': '&',
+      '&lt;': '<',
+      '&gt;': '>',
+      '&#39;': "'",
+      '&quot;': '"'
+    }[tag] || tag)
+);
+/**
+ * 为元素创建 监听事件
+ * @param element 
+ * @param callback 
+ * @param options 
+ * @returns 
+ */
+export const observeMutations = (element, callback, options) => {
+  const observer = new MutationObserver(mutations =>
+    mutations.forEach(m => callback(m))
+  );
+  observer.observe(
+    element,
+    Object.assign(
+      {
+        childList: true,
+        attributes: true,
+        attributeOldValue: true,
+        characterData: true,
+        characterDataOldValue: true,
+        subtree: true,
+      },
+      options
+    )
+  );
+  return observer;
+};

@@ -105,3 +105,16 @@ export const factorial = (n: number) => n < 0 ? (() => { throw new TypeError('Ne
  * @returns 
  */
 export const randomNumberInRange = (min: number, max: number) => Math.random() * (max - min) + min;
+
+
+/**
+ * 计算数组的中位数
+ * @param arr 
+ * @returns 
+ */
+export const median = (arr: Array<number>) => {
+  const mid = Math.floor(arr.length / 2),
+    nums = [...arr].sort((a, b) => a - b);
+  return arr.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
+};
+

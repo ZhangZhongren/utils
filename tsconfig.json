@@ -7,7 +7,7 @@
       "es6",
       "es7",
       "dom.iterable"
-    ]
+    ],
+    "downlevelIteration": true
   },
-  "downlevelIteration": true
 }
