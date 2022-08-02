@@ -504,3 +504,99 @@ export const httpPut = (url: string, data: string, callback: Function, err = con
   request.onerror = () => err(request);
   request.send(data);
 };
+
+/**
+ * http get 请求
+ * @param url 
+ * @param callback 
+ * @param err 
+ */
+export const httpGet = (url: string, callback: Function, err = console.error) => {
+  const request = new XMLHttpRequest();
+  request.open('GET', url, true);
+  request.onload = () => callback(request.responseText);
+  request.onerror = () => err(request);
+  request.send();
+};
+
+/**
+ * http del 请求
+ * @param url 
+ * @param callback 
+ * @param err 
+ */
+export const httpDelete = (url: string, callback: Function, err = console.error) => {
+  const request = new XMLHttpRequest();
+  request.open('DELETE', url, true);
+  request.onload = () => callback(request);
+  request.onerror = () => err(request);
+  request.send();
+};
+
+/**
+ * 当点击事件在元素之外发生时触发
+ * @param element 
+ * @param callback 
+ */
+export const onClickOutside = (element: any, callback: Function) => {
+  document.addEventListener('click', e => {
+    if (!element.contains(e.target)) callback();
+  });
+};
+
+/**
+ * 为元素增加样式
+ * @param el 
+ * @param styles 
+ * @returns 
+ */
+export const addStyles = (el: HTMLElement, styles: any) => Object.assign(el.style, styles);
+
+/**
+ * 获取元素的所有父元素
+ * @param el 
+ * @returns 
+ */
+export const getAncestors = (el: any) => {
+  let ancestors = [];
+  while (el) {
+    ancestors.unshift(el);
+    el = el.parentNode;
+  }
+  return ancestors;
+};
+
+/**
+ * 判断当前是不是浏览器环境
+ * @returns 
+ */
+export const isBrowser = () => ![typeof window, typeof document].includes('undefined');
+
+/**
+ * 增加css 标签
+ * @param css 
+ * @returns 
+ */
+export const injectCSS = (css: string) => {
+  let el = document.createElement('style');
+  el.type = 'text/css';
+  el.innerText = css;
+  document.head.appendChild(el);
+  return el;
+};
+
+/**
+ * 是否含有指定标签
+ * @param el 
+ * @param className 
+ * @returns 
+ */
+export const hasClass = (el: HTMLElement, className: string) => el.classList.contains(className);
+
+/**
+ * 检查路径是否是绝对路径
+ * @param str 
+ * @returns 
+ */
+export const isAbsoluteURL = (str: string) => /^[a-z][a-z0-9+.-]*:/.test(str);
+
